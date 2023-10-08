@@ -1,11 +1,12 @@
-# Core libraries
 torch
 openai
 
-# Huggingface libraries
 datasets
 transformers
 
-# Other libraries (You might need to specify versions or correct package names if they are not pip-installable as-is.)
 peft
 trl
+bitsandbytes
+scipy
+tensorboard
+tensorboardX
