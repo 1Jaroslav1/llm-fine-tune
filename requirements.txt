@@ -10,3 +10,4 @@ bitsandbytes
 scipy
 tensorboard
 tensorboardX
+langchain
