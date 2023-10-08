@@ -6,3 +6,6 @@ pip install jupyter ipykernel
 python -m ipykernel install --user --name=myenv
 
 # ssh-keygen
+# rm -rf ~/.cache/*
+# rm -rf ~/.local/share/Trash/info/* 
+# rm -rf ~/.local/share/Trash/files/*
