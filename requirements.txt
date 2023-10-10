@@ -3,6 +3,7 @@ openai
 
 datasets
 transformers
+huggingface_hub
 
 peft
 trl
