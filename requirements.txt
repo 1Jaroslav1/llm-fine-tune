@@ -12,3 +12,6 @@ scipy
 tensorboard
 tensorboardX
 langchain
+evaluate
+nltk
+rouge_score
