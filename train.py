@@ -156,7 +156,7 @@ def main(args):
         args=training_arguments,
         packing=args.packing,
         compute_metrics=compute_metrics,
-        infinite=True,
+        infinite=args.infinite,
     )
 
     trainer.train()
