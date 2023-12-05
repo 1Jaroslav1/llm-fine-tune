@@ -123,27 +123,23 @@ def main(args):
     )
 
     def compute_metrics(eval_preds):
-        metric = evaluate.load("bleu", "rouge")
+        metric_bleu = evaluate.load("bleu")
+        metric_rouge = evaluate.load("rouge")
         logits, labels = eval_preds
         predictions = np.argmax(logits, axis=-1)
 
-        # Convert predictions and labels to tokens
         predictions_tokens = [tokenizer.convert_ids_to_tokens(seq) for seq in predictions]
         labels_tokens = [tokenizer.convert_ids_to_tokens(seq) for seq in labels]
-
-        # Join tokens to form strings for predictions
         predictions_str = [' '.join(seq).replace(' ▁', ' ').strip() for seq in predictions_tokens]
-
-        # Join tokens to form strings for references and wrap each in a list
         references_str = [[' '.join(seq).replace(' ▁', ' ').strip()] for seq in labels_tokens]
 
-        torch.cuda.empty_cache()
+        bleu_score = metric_bleu.compute(predictions=predictions_str, references=references_str)
+        rouge_score = metric_rouge.compute(predictions=predictions_str, references=references_str)
 
-        score = metric.compute(predictions=predictions_str, references=references_str)
+        print(f"BLEU Score: {bleu_score}")
+        print(f"ROUGE Score: {rouge_score}")
 
-        logging.info(score)
-        # Return only the overall BLEU score as a scalar
-        return {"bleu": score['bleu'], "rouge": score['rouge']}
+        return {"bleu": bleu_score['bleu'], "rouge": rouge_score['rouge1']}
 
     # Set supervised fine-tuning parameters
     trainer = SFTTrainer(
