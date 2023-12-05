@@ -87,7 +87,7 @@ def main(args):
     model = get_peft_model(model, peft_config)
 
     training_arguments = TrainingArguments(
-        output_dir=args.args.output_dir,
+        output_dir=args.output_dir,
         num_train_epochs=args.num_train_epochs,
         per_device_train_batch_size=args.per_device_train_batch_size,
         per_device_eval_batch_size=args.per_device_eval_batch_size,
