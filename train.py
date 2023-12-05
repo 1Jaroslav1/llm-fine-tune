@@ -140,7 +140,7 @@ def main(args):
         eval_dataset=splitted_dataset["test"] if args.eval_set_size > 0 else None,
         peft_config=peft_config,
         dataset_text_field="text",
-        max_seq_length=2024,
+        max_seq_length=args.max_seq_length,
         tokenizer=tokenizer,
         args=training_arguments,
         packing=args.packing,
