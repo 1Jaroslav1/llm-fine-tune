@@ -16,6 +16,16 @@ from peft import LoraConfig, PeftModel, get_peft_model, prepare_model_for_int8_t
 from trl import SFTTrainer
 import numpy as np
 import argparse
+import logging
+import time
+
+logging.basicConfig(
+    format='%(asctime)s %(levelname)s %(module)s %(funcName)s %(message)s',
+    handlers=[
+        logging.FileHandler(f"{time.time()} logs.log", mode='w'),
+        logging.StreamHandler()
+    ]
+)
 
 
 def find_all_linear_names(model):
@@ -130,6 +140,7 @@ def main(args):
 
         score = metric.compute(predictions=predictions_str, references=references_str)
 
+        logging.info(score)
         # Return only the overall BLEU score as a scalar
         return {"bleu": score['bleu'], "rouge": score['rouge']}
 
