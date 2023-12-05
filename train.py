@@ -112,7 +112,7 @@ def main(args):
     )
 
     def compute_metrics(eval_preds):
-        metric = evaluate.load("bleu")
+        metric = evaluate.load("bleu", "rouge")
         logits, labels = eval_preds
         predictions = np.argmax(logits, axis=-1)
 
@@ -128,12 +128,10 @@ def main(args):
 
         torch.cuda.empty_cache()
 
-        # Compute BLEU score
-        bleu_score = metric.compute(predictions=predictions_str, references=references_str)
+        score = metric.compute(predictions=predictions_str, references=references_str)
 
-        print(len(labels))
         # Return only the overall BLEU score as a scalar
-        return {"bleu": bleu_score['bleu']}
+        return {"bleu": score['bleu'], "rouge": score['rouge']}
 
     # Set supervised fine-tuning parameters
     trainer = SFTTrainer(
@@ -217,3 +215,5 @@ parser.add_argument("--eval_set_size", type=float, default=0.1, help="Evaluation
 if __name__ == "__main__":
     args = parser.parse_args()
     main(args)
+
+# python train.py --new_model medical_lama_2_all
