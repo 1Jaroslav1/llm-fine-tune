@@ -216,6 +216,7 @@ parser.add_argument("--logging_steps", type=int, default=50, help="Log every X u
 parser.add_argument("--eval_accumulation_steps", type=int, default=1, help="Evaluation accumulation steps")
 parser.add_argument("--logging_dir", type=str, default="./logs", help=" TensorBoard log directory")
 parser.add_argument("--neftune_noise_alpha ", type=float, default=0.1, help=" NEFTune noise embeddings")
+parser.add_argument("--infinite ", type=bool, default=False, help="Infinite dataset")
 # SFT args
 parser.add_argument("--max_seq_length", type=int, default=1024, help="Maximum sequence length to use")
 parser.add_argument("--packing", type=bool, default=True, help="Pack multiple short examples in the same input sequence to increase efficiency")
