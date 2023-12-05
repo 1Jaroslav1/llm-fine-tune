@@ -208,7 +208,7 @@ parser.add_argument("--neftune_noise_alpha ", type=float, default=0.1, help=" NE
 # SFT args
 parser.add_argument("--max_seq_length", type=int, default=1024, help="Maximum sequence length to use")
 parser.add_argument("--packing", type=bool, default=True, help="Pack multiple short examples in the same input sequence to increase efficiency")
-parser.add_argument("--packing", type=object, default={"": 0}, help="For default load the entire model on the GPU 0")
+parser.add_argument("--device_map", type=object, default={"": 0}, help="For default load the entire model on the GPU 0")
 # Dataset args
 parser.add_argument("--eval_set_size", type=float, default=0.1, help="Evaluation size")
 
