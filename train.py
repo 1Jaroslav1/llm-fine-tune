@@ -183,7 +183,7 @@ parser.add_argument("--new_model", type=str, required=True, help="Fine-tuned mod
 # LoRA args
 parser.add_argument("--lora_r", type=int, default=16, help="LoRA attention dimension")
 parser.add_argument("--lora_alpha", type=int, default=32, help="Alpha parameter for LoRA scaling")
-parser.add_argument("--lora_dropout", type=float, default=32, help="Dropout probability for LoRA layers")
+parser.add_argument("--lora_dropout", type=float, default=0.05, help="Dropout probability for LoRA layers")
 # Training args
 parser.add_argument("--output_dir", type=str, default="./result", help="Output directory where the model predictions and checkpoints will be stored")
 parser.add_argument("--num_train_epochs", type=int, default=3, help="Number of training epochs")
