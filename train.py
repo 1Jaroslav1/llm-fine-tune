@@ -115,6 +115,7 @@ def main(args):
         lr_scheduler_type=args.lr_scheduler_type,
         evaluation_strategy="steps" if args.eval_set_size > 0 else "no",
         load_best_model_at_end=True if args.eval_set_size > 0 else False,
+        save_strategy="epoch",
         report_to="tensorboard",
         eval_accumulation_steps=args.eval_accumulation_steps,
         logging_dir=args.logging_dir,
