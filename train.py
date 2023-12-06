@@ -19,7 +19,6 @@ import argparse
 import logging
 import time
 
-
 def find_all_linear_names(model):
     cls = bnb.nn.Linear4bit #if args.bits == 4 else (bnb.nn.Linear8bitLt if args.bits == 8 else torch.nn.Linear)
     lora_module_names = set()
@@ -35,14 +34,6 @@ def find_all_linear_names(model):
 
 
 def main(args):
-    logging.basicConfig(
-        format='%(asctime)s %(levelname)s %(module)s %(funcName)s %(message)s',
-        handlers=[
-            logging.FileHandler(args.log_file, mode='w'),
-            logging.StreamHandler()
-        ]
-    )
-
     # Set environment variables
     os.environ['HUGGINGFACEHUB_API_TOKEN'] = "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"
     my_dataset = load_dataset(args.dataset_name, split="train")
@@ -225,6 +216,14 @@ parser.add_argument("--log_file", type=str, default="logs.log", help="Logging fi
 
 if __name__ == "__main__":
     args = parser.parse_args()
+    logging.basicConfig(
+        format='%(asctime)s %(levelname)s %(module)s %(funcName)s %(message)s',
+        handlers=[
+            logging.FileHandler(args.log_file, mode='w'),
+            logging.StreamHandler()
+        ],
+        level=logging.INFO
+    )
     main(args)
 
 # python train.py --new_model medical_lama_2_all
