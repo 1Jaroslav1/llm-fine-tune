@@ -224,6 +224,8 @@ if __name__ == "__main__":
         ],
         level=logging.INFO
     )
+    logging.info("Start training...")
     main(args)
+    logging.info("End training...")
 
 # python train.py --new_model medical_lama_2_all
