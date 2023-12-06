@@ -136,8 +136,8 @@ def main(args):
         bleu_score = metric_bleu.compute(predictions=predictions_str, references=references_str)
         rouge_score = metric_rouge.compute(predictions=predictions_str, references=references_str)
 
-        logging.log(f"BLEU Score: {bleu_score}")
-        logging.log(f"ROUGE Score: {rouge_score}")
+        logging.log(msg=f"BLEU Score: {bleu_score}")
+        logging.log(msg=f"ROUGE Score: {rouge_score}")
 
         return {"bleu": bleu_score['bleu'], "rouge": rouge_score['rouge1']}
 
