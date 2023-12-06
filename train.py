@@ -19,14 +19,6 @@ import argparse
 import logging
 import time
 
-logging.basicConfig(
-    format='%(asctime)s %(levelname)s %(module)s %(funcName)s %(message)s',
-    handlers=[
-        logging.FileHandler(f"{time.time()} logs.log", mode='w'),
-        logging.StreamHandler()
-    ]
-)
-
 
 def find_all_linear_names(model):
     cls = bnb.nn.Linear4bit #if args.bits == 4 else (bnb.nn.Linear8bitLt if args.bits == 8 else torch.nn.Linear)
@@ -43,6 +35,14 @@ def find_all_linear_names(model):
 
 
 def main(args):
+    logging.basicConfig(
+        format='%(asctime)s %(levelname)s %(module)s %(funcName)s %(message)s',
+        handlers=[
+            logging.FileHandler(args.log_file, mode='w'),
+            logging.StreamHandler()
+        ]
+    )
+
     # Set environment variables
     os.environ['HUGGINGFACEHUB_API_TOKEN'] = "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"
     my_dataset = load_dataset(args.dataset_name, split="train")
@@ -220,6 +220,8 @@ parser.add_argument("--packing", type=bool, default=True, help="Pack multiple sh
 parser.add_argument("--device_map", type=object, default={"": 0}, help="For default load the entire model on the GPU 0")
 # Dataset args
 parser.add_argument("--eval_set_size", type=float, default=0.1, help="Evaluation size")
+# Other args
+parser.add_argument("--log_file", type=str, default="logs.log", help="Logging file")
 
 if __name__ == "__main__":
     args = parser.parse_args()
