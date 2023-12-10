@@ -110,7 +110,8 @@ def main(args):
         report_to="tensorboard",
         eval_accumulation_steps=args.eval_accumulation_steps,
         logging_dir=args.logging_dir,
-        logging_strategy="steps"
+        logging_strategy="steps",
+        do_eval=args.do_eval
     )
 
     def compute_metrics(eval_preds):
@@ -205,6 +206,7 @@ parser.add_argument("--eval_accumulation_steps", type=int, default=1, help="Eval
 parser.add_argument("--logging_dir", type=str, default="./logs", help=" TensorBoard log directory")
 parser.add_argument("--neftune_noise_alpha ", type=float, default=0.1, help=" NEFTune noise embeddings")
 parser.add_argument("--infinite", type=bool, default=False, help="Infinite dataset")
+parser.add_argument("--do_eval", type=bool, default=True, help="Whether to run evaluation on the validation set or no")
 # SFT args
 parser.add_argument("--max_seq_length", type=int, default=1024, help="Maximum sequence length to use")
 parser.add_argument("--packing", type=bool, default=True, help="Pack multiple short examples in the same input sequence to increase efficiency")
@@ -229,3 +231,4 @@ if __name__ == "__main__":
     logging.info("End training...")
 
 # python train.py --new_model medical_lama_2_all
+# python train.py --new_model medical_lama_ultra dataset_name atom92/medical_healthwa_all_2.0 --global_batch_size 32 --per_device_train_batch_size 4 --per_device_eval_batch_size 4 --logging_steps 30 --eval_set_size 0.1 --log_file med_ultra_logs.log
