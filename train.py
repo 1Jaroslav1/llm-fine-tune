@@ -1,5 +1,6 @@
 import os
 import torch
+import json
 from datasets import load_dataset, concatenate_datasets
 from transformers import (
     AutoModelForCausalLM,
@@ -174,6 +175,15 @@ def main(args):
     tokenizer.push_to_hub(args.new_model, use_temp_dir=False)
 
 
+def parse_device_map(value):
+    if value.lower() == 'auto':
+        return 'auto'
+    try:
+        return json.loads(value.replace("'", "\""))
+    except json.JSONDecodeError:
+        raise argparse.ArgumentTypeError("Invalid format for --device_map. Expected a dictionary or 'auto'.")
+
+
 # Command-line arguments
 parser = argparse.ArgumentParser(description="Model Training Script")
 # General args
@@ -210,7 +220,7 @@ parser.add_argument("--do_eval", type=bool, default=True, help="Whether to run e
 # SFT args
 parser.add_argument("--max_seq_length", type=int, default=1024, help="Maximum sequence length to use")
 parser.add_argument("--packing", type=bool, default=True, help="Pack multiple short examples in the same input sequence to increase efficiency")
-parser.add_argument("--device_map", type=object, default={"": 0}, help="For default load the entire model on the GPU 0")
+parser.add_argument("--device_map", type=parse_device_map, default={"": 0}, help="For default load the entire model on GPU 0, or use 'auto' for automatic allocation.")
 # Dataset args
 parser.add_argument("--eval_set_size", type=float, default=0.1, help="Evaluation size")
 # Other args
