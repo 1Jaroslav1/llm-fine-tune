@@ -147,7 +147,7 @@ def main(args):
         tokenizer=tokenizer,
         args=training_arguments,
         packing=args.packing,
-        compute_metrics=compute_metrics,
+        # compute_metrics=compute_metrics,
         infinite=args.infinite,
     )
 
@@ -245,4 +245,4 @@ if __name__ == "__main__":
     logging.info("End training...")
 
 # python train.py --new_model medical_lama_2_all
-# python train.py --new_model medical_lama_ultra --dataset_name atom92/medical_healthwa_all_2.0 --global_batch_size 64 --per_device_train_batch_size 8 --per_device_eval_batch_size 8 --logging_steps 30 --eval_set_size 0.1 --log_file med_ultra_logs.log --device_map auto
+# python train.py --new_model medical_lama_ultra --dataset_name atom92/medical_healthwa_all_2.0 --global_batch_size 64 --per_device_train_batch_size 8 --per_device_eval_batch_size 8 --logging_steps 30 --eval_steps 100 --eval_set_size 0.1 --log_file med_ultra_logs.log --device_map auto
