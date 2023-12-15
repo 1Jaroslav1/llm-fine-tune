@@ -103,11 +103,13 @@ def main(args):
         max_grad_norm=args.max_grad_norm,
         max_steps=args.max_steps,
         warmup_ratio=args.warmup_ratio,
-        # group_by_length=args.group_by_length,
         lr_scheduler_type=args.lr_scheduler_type,
-        evaluation_strategy="epoch" if args.eval_set_size > 0 else "no",
+        evaluation_strategy="steps" if args.eval_set_size > 0 else "no",
+        eval_steps=args.eval_steps,
         load_best_model_at_end=True if args.eval_set_size > 0 else False,
-        save_strategy="epoch" if args.eval_set_size > 0 else "no",
+        save_strategy="steps",
+        save_steps=args.save_steps,
+        save_total_limit=args.save_total_limit,
         report_to="tensorboard",
         eval_accumulation_steps=args.eval_accumulation_steps,
         logging_dir=args.logging_dir,
@@ -210,7 +212,9 @@ parser.add_argument("--lr_scheduler_type", type=str, default="cosine", help="Lea
 parser.add_argument("--max_steps", type=int, default=-1, help="Number of training steps (overrides num_train_epochs)")
 parser.add_argument("--warmup_ratio", type=float, default=0.03, help="Ratio of steps for a linear warmup (from 0 to learning rate)")
 parser.add_argument("--group_by_length", type=bool, default=True, help="Group sequences into batches with same length \n Saves memory and speeds up training considerably")
-parser.add_argument("--save_steps", type=int, default=0, help="Save checkpoint every X updates steps")
+parser.add_argument("--save_steps", type=int, default=200, help="Save checkpoint every X updates steps")
+parser.add_argument("--save_total_limit", type=int, default=2, help="Limit the total amount of checkpoints")
+parser.add_argument("--eval_steps", type=int, default=50, help="Number of update steps between two evaluations")
 parser.add_argument("--logging_steps", type=int, default=50, help="Log every X updates steps")
 parser.add_argument("--eval_accumulation_steps", type=int, default=1, help="Evaluation accumulation steps")
 parser.add_argument("--logging_dir", type=str, default="./logs", help=" TensorBoard log directory")
@@ -241,4 +245,4 @@ if __name__ == "__main__":
     logging.info("End training...")
 
 # python train.py --new_model medical_lama_2_all
-# python train.py --new_model medical_lama_ultra dataset_name atom92/medical_healthwa_all_2.0 --global_batch_size 32 --per_device_train_batch_size 4 --per_device_eval_batch_size 4 --logging_steps 30 --eval_set_size 0.1 --log_file med_ultra_logs.log
+# python train.py --new_model medical_lama_ultra --dataset_name atom92/medical_healthwa_all_2.0 --global_batch_size 64 --per_device_train_batch_size 8 --per_device_eval_batch_size 8 --logging_steps 30 --eval_set_size 0.1 --log_file med_ultra_logs.log --device_map auto
