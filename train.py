@@ -147,7 +147,7 @@ def main(args):
         tokenizer=tokenizer,
         args=training_arguments,
         packing=args.packing,
-        # compute_metrics=compute_metrics,
+        compute_metrics=compute_metrics,
         infinite=args.infinite,
     )
 
