@@ -4,6 +4,7 @@ python3 -m venv myenv
 source myenv/bin/activate
 pip install jupyter ipykernel
 python -m ipykernel install --user --name=myenv
+pip install -r requirements.txt 
 
 # ssh-keygen
 # rm -rf ~/.cache/*
