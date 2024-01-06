@@ -16,3 +16,7 @@ evaluate
 nltk
 rouge_score
 argparse
+bert_score
+scikit-learn
+sacrebleu
+sacremoses
