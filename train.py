@@ -18,25 +18,10 @@ from trl import SFTTrainer
 import numpy as np
 import argparse
 import logging
-import time
-
-def find_all_linear_names(model):
-    cls = bnb.nn.Linear4bit #if args.bits == 4 else (bnb.nn.Linear8bitLt if args.bits == 8 else torch.nn.Linear)
-    lora_module_names = set()
-    for name, module in model.named_modules():
-        if isinstance(module, cls):
-            names = name.split('.')
-            lora_module_names.add(names[0] if len(names) == 1 else names[-1])
-
-    if 'lm_head' in lora_module_names:
-        lora_module_names.remove('lm_head')
-    print(list(lora_module_names))
-    return list(lora_module_names)
 
 
 def main(args):
-    # Set environment variables
-    os.environ['HUGGINGFACEHUB_API_TOKEN'] = "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"
+    os.environ['HUGGINGFACEHUB_API_TOKEN'] = "TOKEN"
     my_dataset = load_dataset(args.dataset_name, split="train")
     splitted_dataset = my_dataset.train_test_split(test_size=args.eval_set_size, shuffle=True, seed=42)
 
